@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="rounded rounded-md">
+  <v-layout class="rounded-md">
     <v-app-bar>
       <GlobalNavBar />
     </v-app-bar>
@@ -13,5 +13,5 @@
 </template>
 
 <script lang="ts" setup>
-import GlobalNavBar from "@/components/global/NavBar.vue";
+import GlobalNavBar from "../components/global/NavBar.vue";
 </script>
