@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto w-full" style="background-color: rgb(var(--v-theme-background)); max-width: 80vw">
+  <v-card class="mx-auto w-full mb-10" style="background-color: rgb(var(--v-theme-background)); max-width: 80vw">
     <div v-if="loaded">
       <v-img
         class="align-end text-white rounded-2xl"
@@ -35,15 +35,24 @@
 
       <v-card-text class="pt-4"> {{ movieDetails?.overview ?? "" }} </v-card-text>
 
+      <TMDBCommentForm />
+
       <h3 class="text-2xl bold my-12">Actors :</h3>
-      <div class="credits grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-12">
-        <div class="" v-for="(person, index) in credits.cast" :key="index">
-          <img :src="TMDB_IMAGE_BASE_THUMBNAIL + person.profile_path" alt="" />
-          <p>{{ person.name }}</p>
-          <!-- <pre>{{ person }}</pre> -->
+      <div
+        class="credits grid content-stretch items-stretch justify-stretch grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-x-4 gap-y-12"
+      >
+        <div class="flex flex-col justify-between h-40 sm:h-44 md:h-48" v-for="(person, index) in credits.cast" :key="index">
+          <div
+            class="actors h-full w-full bg-cover aspect-[9/16]"
+            :style="{
+              'background-image': person.profile_path
+                ? `url(${TMDB_IMAGE_BASE_THUMBNAIL + person.profile_path})`
+                : 'url(/default-avatar.png)',
+            }"
+          ></div>
+          <p class="min-h-10">{{ person.name }}</p>
         </div>
       </div>
-      <!-- <pre style="max-width: 80vw">{{ movieDetails }}</pre> -->
     </div>
   </v-card>
 </template>
@@ -52,6 +61,7 @@
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { TMDB_IMAGE_BASE_THUMBNAIL } from "~/constants/images";
+import TMDBCommentForm from '~/components/global/movieComment.vue'
 import type { Credits, Media } from "~/types/tmdb";
 
 const route = useRoute();
