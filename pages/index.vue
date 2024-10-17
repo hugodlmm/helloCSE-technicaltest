@@ -13,9 +13,19 @@ import { onMounted, ref } from "vue";
 import { useFetch } from "@vueuse/core";
 import type { Credits, Media, MediaType, PageResult, Person } from "~/types/tmdb";
 import MovieCard from "~/components/ui/MovieCard.vue";
+import { useInfiniteScroll } from "~/composables/useInfiniteScroll";
 
 const page = ref(1);
-const movies = ref<Media[]>();
+const movies = ref<Media[]>([]);
+
+const loadMoreMovies = async () => {
+  const newMovies = await getMovies(page.value);
+  movies.value.push(...newMovies);
+  movies.value = movies.value.filter((movie, index, self) => self.findIndex((m) => m.id === movie.id) === index);
+  page.value++;
+};
+
+useInfiniteScroll(loadMoreMovies);
 
 const getMovies = async (page: number) => {
   const { data } = await useFetch("/api/tmdb/getMovies", {
