@@ -12,6 +12,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     TMDB_KEY: process.env.TMDB_KEY,
+    public: {
+      TINYMCE_KEY: process.env.TINYMCE_KEY,
+    },
   },
   modules: [
     "@vueuse/nuxt",

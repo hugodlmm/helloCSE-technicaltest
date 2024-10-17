@@ -52,7 +52,7 @@
         <label for="comment">Comment:</label>
         <client-only>
           <editor
-            api-key="n6d31g01j408yebxvq4ffqtyrp15a1oyi6ynkjdki5ptcnfj"
+            :api-key="config.public.TINYMCE_KEY"
             id="comment"
             v-model="state.comment"
             :init="editorConfig"
@@ -79,6 +79,8 @@ const movieId = route.params.id;
 
 const comments = ref([]);
 const hoverRating = ref(0);
+
+const config = useRuntimeConfig();
 
 const state = reactive({
   username: "",
@@ -112,6 +114,8 @@ const editorConfig = {
   height: 300,
   menubar: false,
   plugins: ["link", "lists", "autoresize"],
+  skin: "oxide-dark",
+  content_css: "dark",
   toolbar:
     "undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link",
 };
