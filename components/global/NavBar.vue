@@ -5,12 +5,22 @@
         <img src="https://www.hellocse.fr/images/logo/hellocse.svg?v=2" alt="logo" />
       </a>
     </div>
-    <div class="navbar navbar-search">
-      <input type="text" v-model="searchInput" placeholder="Search" />
+    <div v-if="isHomepage" class="navbar navbar-search">
+      <input type="text" v-model="searchInput" placeholder="Search" @input="updateSearch" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-const searchInput = ref("");
+import { useSearchState } from "~/composables/useSearchState";
+
+const { searchInput, setSearchInput } = useSearchState();
+
+const isHomepage = computed(() => {
+  return useRoute().path === "/";
+});
+
+const updateSearch = () => {
+  setSearchInput(searchInput.value);
+};
 </script>
