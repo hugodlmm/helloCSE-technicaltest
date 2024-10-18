@@ -1,10 +1,8 @@
 const getMovies = async (page?: number) => {
-  console.log("🚀 ~ getMovies ~ page", page);
   const { data } = await useFetch("/api/tmdb/getMovies", {
     method: "POST",
     body: JSON.stringify({ page: page || 1 }),
   });
-  console.log("🚀 ~ getMovies ~ data", data.value);
   if (typeof data.value === "string") {
     return JSON.parse(JSON.parse(data.value).body).results;
   }

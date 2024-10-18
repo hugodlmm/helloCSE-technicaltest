@@ -139,7 +139,6 @@ const submitForm = async () => {
     state.username = "";
     state.rating = 1;
     state.comment = "";
-    console.log("Form submitted:", state);
   }
 };
 </script>

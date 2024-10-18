@@ -31,7 +31,6 @@ const getMovie = async (id: string) => {
 };
 
 const searchMovies = async (query: string, page?: number) => {
-  console.log("🚀 ~ searchMovies ~ query", query);
   const url = `${baseUrl}/search/movie?include_adult=false&include_video=false&language=fr-FR&page=${
     page || 1
   }&query=${query}`;
