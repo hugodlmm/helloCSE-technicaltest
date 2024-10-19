@@ -22,6 +22,9 @@
     >
       <MovieCard v-for="movie in searchedMovies" :key="movie?.id" :dataMovie="movie" flat class="w-full" />
     </TransitionGroup>
+    <div class="skeleton-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-12 my-12">
+      <Skeleton v-for="index in 8" :key="index" class="w-full h-72 rounded-2xl" />
+    </div>
   </div>
 </template>
 
@@ -32,6 +35,7 @@ import type { Media } from "~/types/tmdb";
 import MovieCard from "~/components/ui/MovieCard.vue";
 import { useInfiniteScroll } from "~/composables/useInfiniteScroll";
 import { useSearchState } from "~/composables/useSearchState";
+import Skeleton from "~/components/global/Skeleton.vue";
 
 const { searchInput } = useSearchState();
 const newMoviesPage = ref(1);

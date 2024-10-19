@@ -1,7 +1,9 @@
 <template>
   <v-card class="mx-auto w-full mb-10" style="background-color: rgb(var(--v-theme-background)); max-width: 80vw">
+    <Skeleton v-if="!loaded" class="h-72 mb-4 rounded-md" />
+    <Skeleton v-if="!loaded" class="h-72 mb-4 rounded-md" />
+    <Skeleton v-if="!loaded" class="h-72 mb-4 rounded-md" />
     <div v-if="loaded">
-
       <MovieDetails :movieDetails="movieDetails" :crew="credits?.crew" />
       <TMDBCommentForm />
       <ActorsCard :credits="credits" />
@@ -15,7 +17,7 @@ import { useRoute } from "vue-router";
 import TMDBCommentForm from "~/components/ui/MovieComment.vue";
 import ActorsCard from "~/components/ui/ActorsCard.vue";
 import MovieDetails from "~/components/ui/MovieDetails.vue";
-import Skeleton from "~/components/ui/Skeleton.vue";
+import Skeleton from "~/components/global/Skeleton.vue";
 import type { Credits, Media } from "~/types/tmdb";
 
 const route = useRoute();
