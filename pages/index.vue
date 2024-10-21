@@ -2,11 +2,28 @@
   <div>
     <h1 v-if="searchInput.length === 0" class="text-2xl bold my-12">Film populaire</h1>
     <h1 v-if="searchInput.length > 0" class="text-2xl bold my-12">Votre recherche</h1>
-    <div v-if="searchInput.length === 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-12 my-12">
-      <MovieCard flat class="w-full" v-for="movie in movies" :key="movie?.id" :dataMovie="movie" />
-    </div>
-    <div v-if="searchInput.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-12 my-12">
-      <MovieCard flat class="w-full" v-for="movie in searchedMovies" :key="movie?.id" :dataMovie="movie" />
+    <TransitionGroup
+      name="movie-list"
+      tag="div"
+      :class="[
+        'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-12 my-12',
+        { hidden: searchInput.length > 0 },
+      ]"
+    >
+      <MovieCard v-for="movie in movies" :key="movie?.id" :dataMovie="movie" flat class="w-full" />
+    </TransitionGroup>
+    <TransitionGroup
+      name="movie-list"
+      tag="div"
+      :class="[
+        'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-12 my-12',
+        { hidden: searchInput.length === 0 },
+      ]"
+    >
+      <MovieCard v-for="movie in searchedMovies" :key="movie?.id" :dataMovie="movie" flat class="w-full" />
+    </TransitionGroup>
+    <div class="skeleton-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-12 my-12">
+      <Skeleton v-for="index in 8" :key="index" class="w-full h-72 rounded-2xl" />
     </div>
   </div>
 </template>
@@ -18,6 +35,7 @@ import type { Media } from "~/types/tmdb";
 import MovieCard from "~/components/ui/MovieCard.vue";
 import { useInfiniteScroll } from "~/composables/useInfiniteScroll";
 import { useSearchState } from "~/composables/useSearchState";
+import Skeleton from "~/components/global/Skeleton.vue";
 
 const { searchInput } = useSearchState();
 const newMoviesPage = ref(1);
@@ -100,3 +118,21 @@ definePageMeta({
   layout: "default",
 });
 </script>
+
+<style scoped>
+.movie-list-move,
+.movie-list-enter-active,
+.movie-list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.movie-list-enter-from,
+.movie-list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.movie-list-leave-active {
+  position: absolute;
+}
+</style>

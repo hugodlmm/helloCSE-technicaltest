@@ -125,5 +125,6 @@ export interface QueryItem {
 }
 
 export interface Credits {
-  cast: Media[];
+  cast: Person[];
+  crew?: Person[];
 }

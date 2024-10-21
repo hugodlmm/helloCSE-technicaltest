@@ -6,6 +6,7 @@
         height="200"
         :src="TMDB_IMAGE_BASE_THUMBNAIL + dataMovie.poster_path"
         cover
+        :alt="dataMovie.title"
       >
         <v-card-title class="bg-black/70 w-fit rounded-tr-xl">{{ dataMovie.title ?? dataMovie.original_title ?? "" }}</v-card-title>
       </v-img>
